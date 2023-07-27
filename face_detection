@@ -1,0 +1,23 @@
+#import libraries
+import numpy as np
+import cv2
+from google.colab.patches import cv2_imshowpositioned on the faces.
+
+# insert datasets
+face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+eye_cascade = cv2.CascadeClassifier("haarcascade_eye.xml")
+
+# read image
+img = cv2.imread("img.jpg")
+# read image in gray scale
+gray = cv2.imread('img.jpg',0)
+
+# MultiScale detects objects of different sizes in the input image and returns rectangles positioned on the faces.
+faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+for(x,y,w,h) in faces:
+  image = cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
+  # slices the gray array. It selects row starting with y till y+h & column starting with x till x+w 
+  roi_gray = gray[y:y+h,x:x+w]
+  # slices the color array. 
+  roi_color = img[y:y+h,x:x+w]
+cv2_imshow(img)
